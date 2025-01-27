@@ -5,4 +5,6 @@ import org.trave.travel_destination.dto.destination;
 
 public interface destinationRepository extends JpaRepository<destination, Integer> {
 
+    boolean existsByName(String name);
+
 }
