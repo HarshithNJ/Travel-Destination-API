@@ -36,4 +36,10 @@ public class destinationController {
     public ResponseEntity<Object> getDestByCountry(@PathVariable String country){
         return service.getDestByCountry(country);
     }
+
+    //To Get Destination by Name
+    @GetMapping("/destinations/name/{name}")
+    public ResponseEntity<Object> getDestByName(@PathVariable String name){
+        return service.getDestByName(name);
+    }
 }
