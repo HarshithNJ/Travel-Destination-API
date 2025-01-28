@@ -3,6 +3,7 @@ package org.trave.travel_destination.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -24,9 +25,15 @@ public class destinationController {
 
 
     // To Fetch Destinations Data
+    //To Get All Destinations
     @GetMapping("/destinations")
     public ResponseEntity<Object> getDestinations(){
         return service.getDestinations();
     }
     
+    //To Get Destination by Country Name
+    @GetMapping("/destinations/{country}")
+    public ResponseEntity<Object> getDestByCountry(@PathVariable String country){
+        return service.getDestByCountry(country);
+    }
 }

@@ -50,5 +50,22 @@ public class destinationService {
             return new ResponseEntity<Object>(map, HttpStatus.FOUND);
         }
     }
+
+    public ResponseEntity<Object> getDestByCountry(String country) {
+        List<destination> dest = repository.findByCountry(country);
+
+        if(dest.isEmpty()){
+            Map<String, Object> map = new HashMap<String,Object>();
+            map.put("error", "No Destinations found with country name " + country);
+
+            return new ResponseEntity<Object>(map, HttpStatus.NOT_FOUND);
+        }else{
+            Map<String, Object> map = new HashMap<String,Object>();
+            map.put("success", "Destination Data Found");
+            map.put("Travel Plan", dest);
+
+            return new ResponseEntity<Object>(map, HttpStatus.FOUND);
+        }
+    }
     
 }
