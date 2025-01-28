@@ -1,6 +1,7 @@
 package org.trave.travel_destination.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,23 @@ public class destinationService {
             map.put("Travel Plan", destination);
 
             return new ResponseEntity<Object>(map, HttpStatus.CREATED);
+        }
+    }
+
+    public ResponseEntity<Object> getDestinations() {
+        List<destination> dest = repository.findAll();
+
+        if(dest.isEmpty()){
+            Map<String, Object> map = new HashMap<String,Object>();
+            map.put("error", "No Destinations found");
+
+            return new ResponseEntity<Object>(map, HttpStatus.NOT_FOUND);
+        }else{
+            Map<String, Object> map = new HashMap<String,Object>();
+            map.put("success", "Destination Data Found");
+            map.put("Travel Plan", dest);
+
+            return new ResponseEntity<Object>(map, HttpStatus.FOUND);
         }
     }
     
