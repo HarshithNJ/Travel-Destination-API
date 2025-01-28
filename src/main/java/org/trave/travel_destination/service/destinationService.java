@@ -24,13 +24,20 @@ public class destinationService {
 
             return new ResponseEntity<Object>(map, HttpStatus.NOT_ACCEPTABLE);
         }else{
-            repository.save(destination);
+            if(destination.getRating()<0 && destination.getRating()>5){
+                Map<String, Object> map = new HashMap<String,Object>();
+                map.put("error", "Rating should be between 0 and 5");
 
-            Map<String, Object> map = new HashMap<String,Object>();
-            map.put("success", "Destination added successfully");
-            map.put("Travel Plan", destination);
-
-            return new ResponseEntity<Object>(map, HttpStatus.CREATED);
+                return new ResponseEntity<Object>(map, HttpStatus.BAD_REQUEST);
+            }else{
+                repository.save(destination);
+    
+                Map<String, Object> map = new HashMap<String,Object>();
+                map.put("success", "Destination added successfully");
+                map.put("Travel Plan", destination);
+    
+                return new ResponseEntity<Object>(map, HttpStatus.CREATED);
+            }
         }
     }
 
