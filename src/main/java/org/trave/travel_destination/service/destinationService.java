@@ -127,5 +127,49 @@ public class destinationService {
             return new ResponseEntity<Object>(map, HttpStatus.NOT_FOUND);
         }
     }
+
+
+
+
+
+
+
+
+
+    public ResponseEntity<Object> updateDestination(int id, destination destination) {
+        Optional<destination> dest = repository.findById(id);
+
+        if(dest.isPresent()){
+            destination d = dest.get();
+
+            if(destination.getName() != null)
+                d.setName(destination.getName());
+
+            if(destination.getCountry() != null)
+                d.setCountry(destination.getCountry());
+
+            if(destination.getDescription() != null)
+                d.setDescription(destination.getDescription());
+
+            if(destination.getRating() != 0)
+                d.setRating(destination.getRating());
+
+            if(destination.getPrice() != 0)
+                d.setPrice(destination.getPrice());
+
+            repository.save(d);
+
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("success", "Destination Updated successfully");
+            map.put("Travel Plan", d);
+
+            return new ResponseEntity<Object>(map, HttpStatus.OK);
+        }else{
+            Map<String, Object> map = new HashMap<String,Object>();
+            map.put("error", "No Destinations found with id " + id);
+
+            return new ResponseEntity<Object>(map, HttpStatus.NOT_FOUND);
+        }
+    }
     
 }
