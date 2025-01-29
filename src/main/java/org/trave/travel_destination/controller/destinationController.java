@@ -2,6 +2,7 @@ package org.trave.travel_destination.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,9 @@ public class destinationController {
 
 
 
+
+
+
     // To Fetch Destinations Data
     //To Get All Destinations
     @GetMapping("/destinations")
@@ -42,4 +46,15 @@ public class destinationController {
     public ResponseEntity<Object> getDestByName(@PathVariable String name){
         return service.getDestByName(name);
     }
+
+
+
+
+
+    // To Delete a Destination Data
+    @DeleteMapping("/destinations/{name}")
+    public ResponseEntity<Object> deleteDest(@PathVariable String name){
+        return service.deleteDest(name);
+    }
+
 }

@@ -42,6 +42,14 @@ public class destinationService {
         }
     }
 
+
+
+
+
+
+
+
+
     public ResponseEntity<Object> getDestinations() {
         List<destination> dest = repository.findAll();
 
@@ -85,6 +93,33 @@ public class destinationService {
             map.put("Travel Plan", dest);
 
             return new ResponseEntity<Object>(map, HttpStatus.FOUND);
+        }else{
+            Map<String, Object> map = new HashMap<String,Object>();
+            map.put("error", "No Destinations found with name " + name);
+
+            return new ResponseEntity<Object>(map, HttpStatus.NOT_FOUND);
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+    public ResponseEntity<Object> deleteDest(String name) {
+        Optional<destination> dest = repository.findByName(name);
+
+        if(dest.isPresent()){
+            repository.deleteById(dest.get().getId());
+
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("success", "Destination Deleted successfully");
+
+            return new ResponseEntity<Object>(map, HttpStatus.OK);
         }else{
             Map<String, Object> map = new HashMap<String,Object>();
             map.put("error", "No Destinations found with name " + name);
