@@ -12,13 +12,22 @@ import org.springframework.web.bind.annotation.RestController;
 import org.trave.travel_destination.dto.destination;
 import org.trave.travel_destination.service.destinationService;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
+@Tag(name = "Travel Destination API", description = "API for Managing Travel Destination Information")
 public class destinationController {
 
     @Autowired
     destinationService service;
 
     // To Add New Destination
+    @Operation(summary = "Add New Destination", description = "Adds a new destination to the travel destination list")
+    @ApiResponse(responseCode = "201", description = "Destination added successfully")
+    @ApiResponse(responseCode = "400", description = "Bad Request")
+    @ApiResponse(responseCode = "406", description = "Destination already exists")
     @PostMapping("/destinations")
     public ResponseEntity<Object> addDestination(@RequestBody destination destination){
         return service.addDestination(destination);
@@ -30,19 +39,25 @@ public class destinationController {
 
 
     // To Fetch Destinations Data
-    //To Get All Destinations
+    @Operation(summary = "Get All Destinations", description = "Retrieves a list of all destinations")
+    @ApiResponse(responseCode = "302", description = "Destinations retrieved successfully")
+    @ApiResponse(responseCode = "404", description = "No destinations found")
     @GetMapping("/destinations")
     public ResponseEntity<Object> getDestinations(){
         return service.getDestinations();
     }
     
-    //To Get Destination by Country Name
+    @Operation(summary = "Get Destination by Country", description = "Retrieves a list of destinations by country")
+    @ApiResponse(responseCode = "302", description = "Destinations retrieved successfully")
+    @ApiResponse(responseCode = "404", description = "No destinations found")
     @GetMapping("/destinations/{country}")
     public ResponseEntity<Object> getDestByCountry(@PathVariable String country){
         return service.getDestByCountry(country);
     }
 
-    //To Get Destination by Name
+    @Operation(summary = "Get Destination by Name", description = "Retrieves a destination by name")
+    @ApiResponse(responseCode = "302", description = "Destination retrieved successfully")
+    @ApiResponse(responseCode = "404", description = "Destination not found")
     @GetMapping("/destinations/name/{name}")
     public ResponseEntity<Object> getDestByName(@PathVariable String name){
         return service.getDestByName(name);
@@ -53,6 +68,9 @@ public class destinationController {
 
 
     // To Delete a Destination Data
+    @Operation(summary = "Delete a Destination", description = "Delete a Destination By Name")
+    @ApiResponse(responseCode = "200", description = "Destination deleted successfully")
+    @ApiResponse(responseCode = "404", description = "Destination not found")
     @DeleteMapping("/destinations/{name}")
     public ResponseEntity<Object> deleteDest(@PathVariable String name){
         return service.deleteDest(name);
@@ -64,6 +82,9 @@ public class destinationController {
 
 
     // To Update a Destination Data
+    @Operation(summary = "Update a Destination", description = "Update a Destination By Id")
+    @ApiResponse(responseCode = "200", description = "Destination updated successfully")
+    @ApiResponse(responseCode = "404", description = "Destination not found")
     @PatchMapping("/destinations/{id}")
     public ResponseEntity<Object> updateDestination(@PathVariable int id, @RequestBody destination destination){
         return service.updateDestination(id, destination);
